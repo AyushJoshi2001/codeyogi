@@ -1,9 +1,16 @@
 import { FC, memo } from "react";
+import { useParams } from "react-router-dom";
 
 interface Props {}
 
 const Lecture: FC<Props> = (props) => {
-  return <div>This is lecture page.</div>;
+  const { lectureNumber, batchNumber } = useParams<any>();
+
+  return (
+    <div>
+      Showing data of lecture #{lectureNumber} of batch #{batchNumber}
+    </div>
+  );
 };
 
 Lecture.defaultProps = {};

@@ -2,6 +2,7 @@ import { FC, memo } from "react";
 import { Route, Switch } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import DashboardPage from "./Dashboard.page";
+import LecturePage from "./Lecture.page";
 import RecordingsPage from "./Recordings.page";
 
 interface Props {}
@@ -9,13 +10,16 @@ interface Props {}
 const AppContainer: FC<Props> = (props) => {
   return (
     <div className="flex">
-      <Sidebar></Sidebar>
+      <Sidebar />
       <Switch>
         <Route path="/dashboard">
           <DashboardPage />
         </Route>
         <Route path="/recordings">
           <RecordingsPage />
+        </Route>
+        <Route path="/batch/:batchNumber/lecture/:lectureNumber">
+          <LecturePage />
         </Route>
       </Switch>
     </div>
