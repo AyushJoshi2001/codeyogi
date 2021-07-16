@@ -9,7 +9,7 @@ const AuthHero: FC<Props> = (props) => {
   }, []);
   return (
     <div className="w-1/2 h-screen bg-black ">
-      <p className="text-white">Logo Will Go Here.</p>
+      <div className="h-screen bg-cover bg-hero"></div>
     </div>
   );
 };
