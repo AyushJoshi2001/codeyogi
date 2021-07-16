@@ -16,8 +16,24 @@ const Login: React.FC<Props> = (props) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  let emailValidatation = "";
-  let passwordValidation = "";
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    setTouched({ ...touched, [event.target.name]: true });
+  };
+
+  let emailValidateMessage = "";
+  let passwordValidateMessage = "";
+
+  if (!data.email) {
+    emailValidateMessage = "Please enter the email address...";
+  } else if (!data.email.endsWith("@gmail.com")) {
+    emailValidateMessage = "Please enter valid email address...";
+  }
+
+  if (!data.password) {
+    passwordValidateMessage = "Please enter the password...";
+  } else if (data.password.length < 8) {
+    passwordValidateMessage = "Please enter atleast 8 characters...";
+  }
 
   return (
     <div className="mx-auto">
@@ -53,10 +69,14 @@ const Login: React.FC<Props> = (props) => {
               placeholder="Email"
               value={data.email}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="border-b-2 outline-none border-primary"
               autoComplete="email"
               required
             />
+            {touched.email && (
+              <p className="text-red-600">{emailValidateMessage}</p>
+            )}
           </div>
           <div className="pt-10">
             <input
@@ -65,10 +85,14 @@ const Login: React.FC<Props> = (props) => {
               placeholder="Password"
               value={data.password}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="border-b-2 outline-none border-primary"
               autoComplete="current-password"
               required
             />
+            {touched.password && (
+              <p className="text-red-600">{passwordValidateMessage}</p>
+            )}
           </div>
 
           <div className="flex justify-between pt-10">
