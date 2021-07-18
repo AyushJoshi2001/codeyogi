@@ -56,6 +56,10 @@ const Login: React.FC<Props> = (props) => {
           className="pt-16"
           onSubmit={(event) => {
             event.preventDefault();
+            if (emailValidateMessage || passwordValidateMessage) {
+              console.log("Rejected...");
+              return;
+            }
 
             setSubmit(true);
             console.log("Login Details : ", data);
@@ -122,9 +126,11 @@ const Login: React.FC<Props> = (props) => {
                   <ImSpinner3 className="animate-spin" />
                 </div>
               )}
-              <Btn type="submit" className="shadow-xl hover:shadow-none">
-                Log In
-              </Btn>
+              {
+                <Btn type="submit" className="shadow-xl hover:shadow-none">
+                  Log In
+                </Btn>
+              }
             </div>
           </div>
 
