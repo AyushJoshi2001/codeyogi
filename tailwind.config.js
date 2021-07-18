@@ -5,15 +5,16 @@ module.exports = {
     extend: {
       colors: {
         primary: "#4361ee",
+        dark: "#060818",
       },
 
       maxWidth: {
         120: "480px",
       },
 
-      backgroundImage: (theme) => ({
-        hero: "url('./img/hero.webp')",
-      }),
+      fontFamily: {
+        body: ["-apple-system", "sans-serif", "Nunito"],
+      },
     },
   },
   variants: {

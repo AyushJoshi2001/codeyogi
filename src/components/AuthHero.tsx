@@ -1,4 +1,5 @@
 import { FC, memo, useEffect } from "react";
+import hero from "../img/hero.webp";
 
 interface Props {}
 
@@ -8,8 +9,12 @@ const AuthHero: FC<Props> = (props) => {
     console.log("AuthHero rendering for the first time.");
   }, []);
   return (
-    <div className="w-1/2 h-screen bg-black ">
-      <div className="h-screen bg-cover bg-hero"></div>
+    <div className="w-1/2 h-screen bg-dark ">
+      <img
+        src={hero}
+        alt="heroimage"
+        className="object-cover w-4/5 mx-auto my-16"
+      />
     </div>
   );
 };

@@ -1,8 +1,12 @@
 import React, { memo } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BsToggleOn } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
+import { FaUser } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import { useState } from "react";
+import Btn from "../components/Btn";
+import BlueLink from "../components/BlueLink";
 
 interface Props {}
 
@@ -36,16 +40,16 @@ const Login: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="mx-auto">
+    <div className="pt-12 mx-auto text-gray-700 font-body">
       <div className="py-3 max-w-120 px-11">
-        <h1 className="text-4xl font-semibold">
-          Log In to <span className="text-primary">CORK</span>
+        <h1 className="text-4xl font-medium">
+          Log In to <BlueLink to="/signup">CORK</BlueLink>
         </h1>
-        <p>
+        <p className="pt-3 text-sm font-medium">
           New Here?{" "}
-          <Link to="/signup" className="text-primary">
+          <BlueLink to="/signup" className="border-b border-primary">
             Create an account
-          </Link>
+          </BlueLink>
         </p>
 
         <form
@@ -62,15 +66,20 @@ const Login: React.FC<Props> = (props) => {
             }, 5000);
           }}
         >
-          <div>
+          <div className="relative">
+            <label htmlFor="email" className="sr-only">
+              Enter your email
+            </label>
+            <FaUser className="absolute text-lg text-primary" />
             <input
+              id="email"
               type="email"
               name="email"
               placeholder="Email"
               value={data.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="border-b-2 outline-none border-primary"
+              className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="email"
               required
             />
@@ -78,15 +87,20 @@ const Login: React.FC<Props> = (props) => {
               <p className="text-red-600">{emailValidateMessage}</p>
             )}
           </div>
-          <div className="pt-10">
+          <div className="relative pt-10">
+            <label htmlFor="password" className="sr-only">
+              Enter your password
+            </label>
+            <FaLock className="absolute text-lg text-primary" />
             <input
+              id="password"
               type="password"
               name="password"
               placeholder="Password"
               value={data.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="border-b-2 outline-none border-primary"
+              className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="current-password"
               required
             />
@@ -96,10 +110,10 @@ const Login: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex justify-between pt-10">
-            <div className="flex">
-              <p>Show Password</p>
+            <div className="flex items-center">
+              <p className="text-sm">Show Password</p>
               <div className="flex items-center pl-2">
-                <BsToggleOn className="text-2xl" />
+                <BsToggleOn className="text-2xl text-primary" />
               </div>
             </div>
             <div className="flex">
@@ -108,32 +122,43 @@ const Login: React.FC<Props> = (props) => {
                   <ImSpinner3 className="animate-spin" />
                 </div>
               )}
-              <button
-                type="submit"
-                className="px-5 py-2 text-sm text-white rounded bg-primary"
-              >
+              <Btn type="submit" className="shadow-xl hover:shadow-none">
                 Log In
-              </button>
+              </Btn>
             </div>
           </div>
 
-          <div className="flex justify-center pt-10">
+          <div className="flex justify-center pt-16 ">
             <div className="flex items-center pr-2">
-              <input type="checkbox" name="loggedin" />
+              <input type="checkbox" name="loggedin" className="shadow-inner" />
             </div>
-            <p>Keep me logged in</p>
+            <p className="text-sm text-gray-400">Keep me logged in</p>
           </div>
-          <div className="text-center text-primary">
-            <Link to="/signup">Forgot Password?</Link>
+          <div className="pt-5 text-center text-primary">
+            <BlueLink to="/signup" className="font-semibold">
+              Forgot Password?
+            </BlueLink>
           </div>
         </form>
 
-        <p className="pt-10">
-          © 2020 All Rights Reserved. <span className="text-primary">CORK</span>{" "}
+        <p className="pt-20 text-sm">
+          © 2020 All Rights Reserved.{" "}
+          <BlueLink to="/login" className="font-semibold">
+            CORK
+          </BlueLink>{" "}
           is a product of Designreset.{" "}
-          <span className="text-primary">Cookie Preferences</span>,{" "}
-          <span className="text-primary">Privacy</span>, and{" "}
-          <span className="text-primary">Terms</span>.
+          <BlueLink to="/login" className="font-semibold">
+            Cookie Preferences
+          </BlueLink>
+          ,{" "}
+          <BlueLink to="/login" className="font-semibold">
+            Privacy
+          </BlueLink>
+          , and{" "}
+          <BlueLink to="/login" className="font-semibold">
+            Terms
+          </BlueLink>
+          .
         </p>
       </div>
     </div>
