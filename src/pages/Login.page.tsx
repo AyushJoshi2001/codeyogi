@@ -45,7 +45,7 @@ const Login: React.FC<Props> = (props) => {
         <h1 className="text-4xl font-medium">
           Log In to <BlueLink to="/signup">CORK</BlueLink>
         </h1>
-        <p className="pt-3 text-sm font-medium">
+        <p className="pt-3 text-sm font-semibold">
           New Here?{" "}
           <BlueLink to="/signup" className="border-b border-primary">
             Create an account
