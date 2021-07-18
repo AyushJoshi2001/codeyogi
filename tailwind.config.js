@@ -15,6 +15,10 @@ module.exports = {
       fontFamily: {
         body: ["-apple-system", "sans-serif", "Nunito"],
       },
+
+      screens: {
+        hideAuth: "990px",
+      },
     },
   },
   variants: {
