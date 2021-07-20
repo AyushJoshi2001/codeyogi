@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { FC, memo } from "react";
 import { BsToggleOn } from "react-icons/bs";
 import { FaLock, FaUser } from "react-icons/fa";
@@ -6,35 +5,40 @@ import { SiMailDotRu } from "react-icons/si";
 import BlueLink from "../components/BlueLink";
 import Btn from "../components/Btn";
 import * as yup from "yup";
+import { useFormik } from "formik";
+import { ImSpinner3 } from "react-icons/im";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 
 const Signup: FC<Props> = (props) => {
-  const [data, setData] = useState({ username: "", email: "", password: "" });
-  const [touched, setTouched] = useState({
-    username: false,
-    email: false,
-    password: false,
+  const history = useHistory();
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+
+    validationSchema: yup.object().shape({
+      username: yup.string().required().min(5),
+      email: yup.string().required().email(),
+      password: yup.string().required().min(8),
+    }),
+
+    onSubmit: (data) => {
+      console.log("Login Details : ", data);
+      setTimeout(() => {
+        console.log("Login Successfull...");
+        console.log("Transfering to Dahsboard...");
+        history.push("/dashboard");
+      }, 5000);
+    },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [event.target.name]: [event.target.value] });
-  };
-
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {};
-
-  let usernameValidateMessage = "";
-  let emailValidateMessage = "";
-  let passwordValidateMessage = "";
-
-  const formDataValidator = {
-    usernameValidator: yup.string().required().min(5),
-    emailValidator: yup.string().required().email(),
-    passwordValidator: yup.string().required().min(8),
-  };
-
   return (
-    <div className="w-1/2 pt-12 mx-auto text-gray-700 font-body">
+    <div className="w-1/2 mx-auto text-gray-700 pt-9 font-body">
       <div className="py-3 mx-auto max-w-120 px-11">
         <h1 className="text-4xl font-medium">
           Get started with a free account
@@ -46,7 +50,7 @@ const Signup: FC<Props> = (props) => {
           </BlueLink>
         </p>
 
-        <form className="pt-16">
+        <form className="pt-12" onSubmit={formik.handleSubmit}>
           <div className="relative">
             <label htmlFor="username" className="sr-only">
               Enter your username
@@ -56,15 +60,16 @@ const Signup: FC<Props> = (props) => {
               id="username"
               type="text"
               name="username"
-              value={data.username}
-              onChange={handleChange}
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder="Username"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="Username"
               required
             />
-            {touched.username && (
-              <p className="text-red-600">{usernameValidateMessage}</p>
+            {formik.touched.username && (
+              <p className="text-red-600">{formik.errors.username}</p>
             )}
           </div>
           <div className="relative pt-10">
@@ -76,15 +81,16 @@ const Signup: FC<Props> = (props) => {
               id="email"
               type="email"
               name="email"
-              value={data.email}
-              onChange={handleChange}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder="Email"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="email"
               required
             />
-            {touched.email && (
-              <p className="text-red-600">{emailValidateMessage}</p>
+            {formik.touched.email && (
+              <p className="text-red-600">{formik.errors.email}</p>
             )}
           </div>
           <div className="relative pt-10">
@@ -96,15 +102,16 @@ const Signup: FC<Props> = (props) => {
               id="password"
               type="password"
               name="password"
-              value={data.password}
-              onChange={handleChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder="Password"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="current-password"
               required
             />
-            {touched.password && (
-              <p className="text-red-600">{passwordValidateMessage}</p>
+            {formik.touched.password && (
+              <p className="text-red-600">{formik.errors.password}</p>
             )}
           </div>
 
@@ -126,19 +133,21 @@ const Signup: FC<Props> = (props) => {
               </div>
             </div>
             <div className="flex">
-              {/* {submit && (
+              {formik.isSubmitting && (
                 <div className="flex items-center pr-4">
                   <ImSpinner3 className="animate-spin" />
                 </div>
-              )} */}
-              <Btn type="submit" className="shadow-xl hover:shadow-none">
-                Get Started!
-              </Btn>
+              )}
+              {
+                <Btn type="submit" className="shadow-xl hover:shadow-none">
+                  Log In
+                </Btn>
+              }
             </div>
           </div>
         </form>
 
-        <p className="pt-20 text-sm">
+        <p className="pt-16 text-sm">
           © 2020 All Rights Reserved.{" "}
           <BlueLink to="/login" className="font-semibold">
             CORK
