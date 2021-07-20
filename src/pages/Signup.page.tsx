@@ -1,13 +1,38 @@
+import React, { useState } from "react";
 import { FC, memo } from "react";
 import { BsToggleOn } from "react-icons/bs";
 import { FaLock, FaUser } from "react-icons/fa";
 import { SiMailDotRu } from "react-icons/si";
 import BlueLink from "../components/BlueLink";
 import Btn from "../components/Btn";
+import * as yup from "yup";
 
 interface Props {}
 
 const Signup: FC<Props> = (props) => {
+  const [data, setData] = useState({ username: "", email: "", password: "" });
+  const [touched, setTouched] = useState({
+    username: false,
+    email: false,
+    password: false,
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setData({ ...data, [event.target.name]: [event.target.value] });
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {};
+
+  let usernameValidateMessage = "";
+  let emailValidateMessage = "";
+  let passwordValidateMessage = "";
+
+  const formDataValidator = {
+    usernameValidator: yup.string().required().min(5),
+    emailValidator: yup.string().required().email(),
+    passwordValidator: yup.string().required().min(8),
+  };
+
   return (
     <div className="w-1/2 pt-12 mx-auto text-gray-700 font-body">
       <div className="py-3 mx-auto max-w-120 px-11">
@@ -31,11 +56,16 @@ const Signup: FC<Props> = (props) => {
               id="username"
               type="text"
               name="username"
+              value={data.username}
+              onChange={handleChange}
               placeholder="Username"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="Username"
               required
             />
+            {touched.username && (
+              <p className="text-red-600">{usernameValidateMessage}</p>
+            )}
           </div>
           <div className="relative pt-10">
             <label htmlFor="email" className="sr-only">
@@ -46,11 +76,16 @@ const Signup: FC<Props> = (props) => {
               id="email"
               type="email"
               name="email"
+              value={data.email}
+              onChange={handleChange}
               placeholder="Email"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="email"
               required
             />
+            {touched.email && (
+              <p className="text-red-600">{emailValidateMessage}</p>
+            )}
           </div>
           <div className="relative pt-10">
             <label htmlFor="password" className="sr-only">
@@ -61,11 +96,16 @@ const Signup: FC<Props> = (props) => {
               id="password"
               type="password"
               name="password"
+              value={data.password}
+              onChange={handleChange}
               placeholder="Password"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="current-password"
               required
             />
+            {touched.password && (
+              <p className="text-red-600">{passwordValidateMessage}</p>
+            )}
           </div>
 
           <div className="flex pt-8">

@@ -1,21 +1,21 @@
-import { FC, memo } from "react";
+import { ButtonHTMLAttributes, FC, memo } from "react";
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: "button" | "submit" | "reset" | undefined;
-  children: string;
   className?: string;
 }
 
-const Btn: FC<Props> = (props) => {
+const Btn: FC<Props> = ({ type, children, className, ...rest }) => {
   return (
     <div>
       <button
-        type={props.type}
+        {...rest}
+        type={type}
         className={
-          "px-5 py-2 text-sm text-white rounded bg-primary " + props.className
+          "px-5 py-2 text-sm text-white rounded bg-primary " + className
         }
       >
-        {props.children}
+        {children}
       </button>
     </div>
   );
