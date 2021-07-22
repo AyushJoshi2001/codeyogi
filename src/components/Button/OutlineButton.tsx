@@ -14,13 +14,23 @@ const OutlineButton: FC<Props> = ({
   type,
   ...rest
 }) => {
-  let themeClass = "bg-danger";
+  let themeClass = "";
+  if (theme === "primary") {
+    themeClass = "text-primary border-primary hover:bg-primary";
+  } else if (theme === "dark") {
+    themeClass = "text-dark border-dark hover:bg-dark";
+  } else {
+    themeClass = "text-danger border-danger hover:bg-danger";
+  }
   return (
     <button
       {...rest}
       type={type}
       className={
-        "text-white shadow-lg hover:shadow-none " + themeClass + " " + className
+        "border hover:shadow-xl px-5 py-2 rounded text-sm hover:text-white " +
+        themeClass +
+        " " +
+        className
       }
     >
       {children}

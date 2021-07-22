@@ -2,7 +2,7 @@ import SolidButton from "./SolidButton";
 import OutlineButton from "./OutlineButton";
 
 const Solid = {
-  title: "Solid Button",
+  title: "Button",
   component: SolidButton,
   argTypes: {
     theme: {
@@ -12,7 +12,7 @@ const Solid = {
 };
 
 const Outline = {
-  title: "Outline Button",
+  title: "Button",
   component: OutlineButton,
   argTypes: {
     theme: {

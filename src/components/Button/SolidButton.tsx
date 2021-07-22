@@ -18,7 +18,7 @@ const SolidButton: FC<Props> = ({
   let themeClass = "";
   if (theme === "primary") {
     themeClass = "bg-primary";
-  } else if (themeClass === "dark") {
+  } else if (theme === "dark") {
     themeClass = "bg-dark";
   } else {
     themeClass = "bg-danger";
@@ -29,7 +29,7 @@ const SolidButton: FC<Props> = ({
       {...rest}
       type={type}
       className={
-        "text-white shadow-lg hover:shadow-none px-4 py-2 " +
+        "text-white shadow-xl hover:shadow-none px-5 py-2 rounded text-sm " +
         themeClass +
         " " +
         className
