@@ -1,16 +1,14 @@
 import { ButtonHTMLAttributes, FC, memo } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  type: "button" | "submit" | "reset" | undefined;
   className?: string;
 }
 
-const Btn: FC<Props> = ({ type, children, className, ...rest }) => {
+const Button: FC<Props> = ({ children, className, ...rest }) => {
   return (
     <div>
       <button
         {...rest}
-        type={type}
         className={
           "px-5 py-2 text-sm text-white rounded bg-primary " + className
         }
@@ -21,6 +19,8 @@ const Btn: FC<Props> = ({ type, children, className, ...rest }) => {
   );
 };
 
-Btn.defaultProps = {};
+Button.defaultProps = {
+  type: "submit",
+};
 
-export default memo(Btn);
+export default memo(Button);

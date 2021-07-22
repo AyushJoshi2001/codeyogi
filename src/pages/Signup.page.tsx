@@ -1,17 +1,25 @@
-import { FC, memo } from "react";
-import { BsToggleOn } from "react-icons/bs";
+import React, { FC, memo } from "react";
+import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 import { FaLock, FaUser } from "react-icons/fa";
 import { SiMailDotRu } from "react-icons/si";
 import BlueLink from "../components/BlueLink";
-import Btn from "../components/Btn";
+import Button from "../components/Button/Button";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { ImSpinner3 } from "react-icons/im";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 interface Props {}
 
 const Signup: FC<Props> = (props) => {
+  const [toggle, setToggle] = useState(false);
+  let passwordType = toggle ? "text" : "password";
+
+  const toggleClicked = (event: React.MouseEvent<HTMLOrSVGElement>) => {
+    setToggle(!toggle);
+  };
+
   const history = useHistory();
 
   const formik = useFormik({
@@ -100,7 +108,7 @@ const Signup: FC<Props> = (props) => {
             <FaLock className="absolute text-lg text-primary" />
             <input
               id="password"
-              type="password"
+              type={passwordType}
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -129,7 +137,18 @@ const Signup: FC<Props> = (props) => {
             <div className="flex items-center">
               <p className="text-sm">Show Password</p>
               <div className="flex items-center pl-2">
-                <BsToggleOn className="text-2xl text-primary" />
+                {toggle && (
+                  <BsToggleOn
+                    className="text-2xl text-primary"
+                    onClick={toggleClicked}
+                  />
+                )}
+                {!toggle && (
+                  <BsToggleOff
+                    className="text-2xl text-primary"
+                    onClick={toggleClicked}
+                  />
+                )}
               </div>
             </div>
             <div className="flex">
@@ -139,9 +158,9 @@ const Signup: FC<Props> = (props) => {
                 </div>
               )}
               {
-                <Btn type="submit" className="shadow-xl hover:shadow-none">
+                <Button type="submit" className="shadow-xl hover:shadow-none">
                   Log In
-                </Btn>
+                </Button>
               }
             </div>
           </div>

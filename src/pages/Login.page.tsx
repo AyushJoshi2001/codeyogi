@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import { useHistory } from "react-router-dom";
-import { BsToggleOn } from "react-icons/bs";
+import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { useState } from "react";
-import Btn from "../components/Btn";
+import Button from "../components/Button/Button";
 import BlueLink from "../components/BlueLink";
 
 interface Props {}
@@ -15,6 +15,13 @@ const Login: React.FC<Props> = (props) => {
   const [submit, setSubmit] = useState(false);
   const [touched, setTouched] = useState({ email: false, password: false });
   const history = useHistory();
+
+  const [toggle, setToggle] = useState(false);
+  let passwordType = toggle ? "text" : "password";
+
+  const toggleClicked = (event: React.MouseEvent<HTMLOrSVGElement>) => {
+    setToggle(!toggle);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -98,7 +105,7 @@ const Login: React.FC<Props> = (props) => {
             <FaLock className="absolute text-lg text-primary" />
             <input
               id="password"
-              type="password"
+              type={passwordType}
               name="password"
               placeholder="Password"
               value={data.password}
@@ -117,7 +124,18 @@ const Login: React.FC<Props> = (props) => {
             <div className="flex items-center">
               <p className="text-sm">Show Password</p>
               <div className="flex items-center pl-2">
-                <BsToggleOn className="text-2xl text-primary" />
+                {toggle && (
+                  <BsToggleOn
+                    className="text-2xl text-primary"
+                    onClick={toggleClicked}
+                  />
+                )}
+                {!toggle && (
+                  <BsToggleOff
+                    className="text-2xl text-primary"
+                    onClick={toggleClicked}
+                  />
+                )}
               </div>
             </div>
             <div className="flex">
@@ -127,9 +145,9 @@ const Login: React.FC<Props> = (props) => {
                 </div>
               )}
               {
-                <Btn type="submit" className="shadow-xl hover:shadow-none">
+                <Button type="submit" className="shadow-xl hover:shadow-none">
                   Log In
-                </Btn>
+                </Button>
               }
             </div>
           </div>
