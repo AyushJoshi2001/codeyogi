@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: "#4361ee",
         dark: "#060818",
+        danger: "#e7515a",
       },
 
       maxWidth: {
