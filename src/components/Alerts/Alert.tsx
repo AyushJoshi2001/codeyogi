@@ -24,7 +24,7 @@ const Alert: FC<Props> = ({ children, className, theme }) => {
   return (
     <div
       className={
-        "flex justify-between px-4 rounded-lg text-white " +
+        "flex justify-between px-4 rounded-lg text-white py-2 " +
         themeClass +
         " " +
         className

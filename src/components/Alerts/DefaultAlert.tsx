@@ -24,7 +24,10 @@ const DefaultAlert: FC<Props> = ({ children, className, theme }) => {
   return (
     <div
       className={
-        "flex justify-between px-4 rounded-lg " + themeClass + " " + className
+        "flex justify-between px-4 py-2 rounded-lg " +
+        themeClass +
+        " " +
+        className
       }
     >
       <p>{children}</p>

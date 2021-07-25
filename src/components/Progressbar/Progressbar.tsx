@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 
 interface Props {
-  theme?: "primary" | "dark" | "danger";
+  theme: "primary" | "dark" | "danger";
   progress: number;
   className?: string;
 }

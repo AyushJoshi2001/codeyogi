@@ -19,7 +19,7 @@ const OutlineAlert: FC<Props> = ({ children, className, theme }) => {
   return (
     <div
       className={
-        "flex px-4 rounded-lg border text-gray-500 " +
+        "flex px-4 rounded-lg border py-2 text-gray-500 " +
         themeClass +
         " " +
         className

@@ -5,6 +5,12 @@ import OutlineAlert from "./OutlineAlert";
 const Solid = {
   title: "Alert",
   component: { Alert },
+  argTypes: {
+    theme: {
+      options: ["primary", "dark", "danger"],
+      control: { type: "radio" },
+    },
+  },
 };
 
 export const solid = (args: any) => <Alert {...args}></Alert>;
@@ -18,6 +24,12 @@ solid.args = {
 const Default = {
   title: "Default Alert",
   component: { DefaultAlert },
+  argTypes: {
+    theme: {
+      options: ["primary", "dark", "danger"],
+      control: { type: "radio" },
+    },
+  },
 };
 
 export const defaultAlert = (args: any) => (
@@ -33,6 +45,12 @@ defaultAlert.args = {
 const Outline = {
   title: "Outline Alert",
   component: { OutlineAlert },
+  argTypes: {
+    theme: {
+      options: ["primary", "dark", "danger"],
+      control: { type: "radio" },
+    },
+  },
 };
 
 export const outlineAlert = (args: any) => (
