@@ -3,9 +3,9 @@ import { FC, ImgHTMLAttributes, memo } from "react";
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   url: string;
   className?: string;
-  shape: "square" | "circle";
-  size: "small" | "medium" | "large";
-  status: "online" | "offline" | "unknown";
+  shape?: "square" | "circle";
+  size?: "small" | "medium" | "large";
+  status?: "online" | "offline" | "unknown";
 }
 
 const Avatar: FC<Props> = ({
