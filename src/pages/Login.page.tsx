@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { useHistory } from "react-router-dom";
 import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
 import { FaUser } from "react-icons/fa";
@@ -7,13 +6,15 @@ import { FaLock } from "react-icons/fa";
 import { useState } from "react";
 import Button from "../components/Button/Button";
 import BlueLink from "../components/BlueLink";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { login } from "../api/auth";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
-  const [submit, setSubmit] = useState(false);
-  const [touched, setTouched] = useState({ email: false, password: false });
   const history = useHistory();
 
   const [toggle, setToggle] = useState(false);
@@ -23,28 +24,25 @@ const Login: React.FC<Props> = (props) => {
     setToggle(!toggle);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setTouched({ ...touched, [event.target.name]: true });
-  };
+    validationSchema: yup.object().shape({
+      email: yup.string().required().email(),
+      password: yup.string().required().min(8),
+    }),
 
-  let emailValidateMessage = "";
-  let passwordValidateMessage = "";
-
-  if (!data.email) {
-    emailValidateMessage = "Please enter the email address...";
-  } else if (!data.email.endsWith("@gmail.com")) {
-    emailValidateMessage = "Please enter valid email address...";
-  }
-
-  if (!data.password) {
-    passwordValidateMessage = "Please enter the password...";
-  } else if (data.password.length < 8) {
-    passwordValidateMessage = "Please enter atleast 8 characters...";
-  }
+    onSubmit: (data) => {
+      login(data).then(() => {
+        // console.log("redirecting to dashboard...");
+        // history.push("/dashboard");
+        window.location.href = "/dashboard";
+      });
+    },
+  });
 
   return (
     <div className="pt-12 mx-auto text-gray-700 font-body">
@@ -59,24 +57,7 @@ const Login: React.FC<Props> = (props) => {
           </BlueLink>
         </p>
 
-        <form
-          className="pt-16"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (emailValidateMessage || passwordValidateMessage) {
-              console.log("Rejected...");
-              return;
-            }
-
-            setSubmit(true);
-            console.log("Login Details : ", data);
-            setTimeout(() => {
-              console.log("Login Successfull...");
-              console.log("Transfering to Dahsboard...");
-              history.push("/dashboard");
-            }, 5000);
-          }}
-        >
+        <form className="pt-16" onSubmit={formik.handleSubmit}>
           <div className="relative">
             <label htmlFor="email" className="sr-only">
               Enter your email
@@ -87,15 +68,15 @@ const Login: React.FC<Props> = (props) => {
               type="email"
               name="email"
               placeholder="Email"
-              value={data.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="email"
               required
             />
-            {touched.email && (
-              <p className="text-red-600">{emailValidateMessage}</p>
+            {formik.touched.email && (
+              <p className="text-red-600">{formik.errors.email}</p>
             )}
           </div>
           <div className="relative pt-10">
@@ -108,15 +89,15 @@ const Login: React.FC<Props> = (props) => {
               type={passwordType}
               name="password"
               placeholder="Password"
-              value={data.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="current-password"
               required
             />
-            {touched.password && (
-              <p className="text-red-600">{passwordValidateMessage}</p>
+            {formik.touched.password && (
+              <p className="text-red-600">{formik.errors.password}</p>
             )}
           </div>
 
@@ -139,7 +120,7 @@ const Login: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className="flex">
-              {submit && (
+              {formik.isSubmitting && (
                 <div className="flex items-center pr-4">
                   <ImSpinner3 className="animate-spin" />
                 </div>
