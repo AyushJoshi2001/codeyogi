@@ -18,7 +18,7 @@ export const login = (data: LoginRequest) => {
     const url = BASE_URL + "/login";
 
     return axios.post<LoginResponse>(url, data).then(response => {
-        console.log(response.data.token);
+        // console.log(response.data.token);
         localStorage.setItem("auth_token", response.data.token);
         return response.data.user;
     });

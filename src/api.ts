@@ -10,7 +10,7 @@ export const me = () => {
     const url = BASE_URL + "/me";
     
     return axios.get<MeResponse>(url).then(response => {
-        console.log("me response: ",response.data.data);
+        // console.log("me response: ",response.data.data);
         return response.data.data
     });
 }

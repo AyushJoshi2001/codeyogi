@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { me } from "./api";
 import { LS_AUTH_TOKEN } from "./api/base";
@@ -13,6 +13,7 @@ import NotFoundPage from "./pages/NotFound.page";
 function App() {
   const [user, setUser] = useState<User>();
   const token = localStorage.getItem(LS_AUTH_TOKEN);
+  // console.log("token : ", token);
 
   useEffect(() => {
     if (!token) {
@@ -22,7 +23,7 @@ function App() {
     me().then((u) => {
       setUser(u);
     });
-  }, []);
+  }, [token]);
 
   if (token && !user) {
     return <div>loading...</div>;

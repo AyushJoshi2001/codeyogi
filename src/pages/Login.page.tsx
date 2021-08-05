@@ -9,13 +9,13 @@ import BlueLink from "../components/BlueLink";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { login } from "../api/auth";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
-  const [data, setData] = useState({ email: "", password: "" });
-  const history = useHistory();
+  // const [data, setData] = useState({ email: "", password: "" });
+  // const history = useHistory();
 
   const [toggle, setToggle] = useState(false);
   let passwordType = toggle ? "text" : "password";

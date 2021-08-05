@@ -13,8 +13,8 @@ interface Props {
 
 const Dashboard: FC<Props> = ({ className, user }) => {
   const [group, setGroup] = useState<Group[]>([]);
-  const [query, setQuery] = useState("");
   const [value, setValue] = useState("");
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     // console.log("dashboard page");
@@ -23,7 +23,7 @@ const Dashboard: FC<Props> = ({ className, user }) => {
       query: query,
     }).then((data) => {
       setGroup(data!);
-      console.log(query);
+      // console.log(query);
     });
   }, [query]);
 
@@ -31,16 +31,18 @@ const Dashboard: FC<Props> = ({ className, user }) => {
     <div className={"px-5 " + className}>
       <div className="flex pt-5 space-x-5 text-2xl font-medium">
         <img
-          src={user.profile_pic_url!}
-          className="object-cover w-10 h-10 rounded-full"
-          alt="profile picture"
+          src={user.profile_pic_url}
+          className="object-cover w-12 h-12 rounded-full"
+          alt="profile pic"
         />
-        <h1>{user.first_name! + " " + user.last_name!}</h1>
+        <div className="flex items-center">
+          <h1>{user.first_name + " " + user.last_name}</h1>
+        </div>
       </div>
       <div className="flex py-12">
         <Input
           type="text"
-          placeholder="Search"
+          placeholder="Search on Click"
           onChange={(event) => {
             setValue(event.target.value);
           }}
@@ -50,17 +52,31 @@ const Dashboard: FC<Props> = ({ className, user }) => {
           Search
         </SolidButton>
       </div>
+      <div className="flex pb-12">
+        <Input
+          type="text"
+          placeholder="Search on Type"
+          onChange={(event) => {
+            setValue(event.target.value);
+            setQuery(event.target.value);
+          }}
+          className="mr-5 focus:border-primary w-30"
+        />
+      </div>
       {group.map((groupProfile) => {
         return (
-          <div className="flex w-full p-2 my-4 border rounded-lg cursor-pointer bg-blue-50 hover:bg-black hover:text-white ">
+          <div
+            key={groupProfile.id}
+            className="flex w-full p-2 my-4 border border-black rounded-lg cursor-pointer bg-blue-50 hover:bg-black hover:text-white "
+          >
             <img
-              onError={(e: any) => {
-                e.target.onerror = null;
-                e.target.src = "/logo192.png";
-              }}
               src={groupProfile.group_image_url}
               className="w-12 h-12 mr-2 text-xs rounded-full "
-              alt="Group Image "
+              alt="Group Profile "
+              onError={(e: any) => {
+                e.target.src = "/logo192.png";
+                e.target.onerror = null;
+              }}
             />
             <div>
               <p className="font-bold">{groupProfile.name}</p>
