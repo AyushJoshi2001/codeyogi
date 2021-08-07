@@ -1,22 +1,18 @@
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import { BsToggleOff, BsToggleOn } from "react-icons/bs";
-import { ImSpinner3 } from "react-icons/im";
-import { FaUser } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
-import { useState } from "react";
-import Button from "../components/Button/Button";
-import BlueLink from "../components/BlueLink";
+import { FaLock, FaUser } from "react-icons/fa";
+import { SiMailDotRu } from "react-icons/si";
+import BlueLink from "../../components/BlueLink";
+import Button from "../../components/Button/Button";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { login } from "../api/auth";
-// import { useHistory } from "react-router-dom";
+import { ImSpinner3 } from "react-icons/im";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 interface Props {}
 
-const Login: React.FC<Props> = (props) => {
-  // const [data, setData] = useState({ email: "", password: "" });
-  // const history = useHistory();
-
+const Signup: FC<Props> = (props) => {
   const [toggle, setToggle] = useState(false);
   let passwordType = toggle ? "text" : "password";
 
@@ -24,53 +20,79 @@ const Login: React.FC<Props> = (props) => {
     setToggle(!toggle);
   };
 
+  const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
+      username: "",
       email: "",
       password: "",
     },
 
     validationSchema: yup.object().shape({
+      username: yup.string().required().min(5),
       email: yup.string().required().email(),
       password: yup.string().required().min(8),
     }),
 
     onSubmit: (data) => {
-      login(data).then(() => {
-        // console.log("redirecting to dashboard...");
-        // history.push("/dashboard");
-        window.location.href = "/dashboard";
-      });
+      console.log("Login Details : ", data);
+      setTimeout(() => {
+        console.log("Login Successfull...");
+        console.log("Transfering to Dahsboard...");
+        history.push("/dashboard");
+      }, 5000);
     },
   });
 
   return (
-    <div className="pt-12 mx-auto text-gray-700 font-body">
-      <div className="py-3 max-w-120 px-11">
+    <div className="w-1/2 mx-auto text-gray-700 pt-9 font-body">
+      <div className="py-3 mx-auto max-w-120 px-11">
         <h1 className="text-4xl font-medium">
-          Log In to <BlueLink to="/signup">CORK</BlueLink>
+          Get started with a free account
         </h1>
         <p className="pt-3 text-sm font-semibold">
-          New Here?{" "}
-          <BlueLink to="/signup" className="border-b border-primary">
-            Create an account
+          Already have an account?{" "}
+          <BlueLink to="/login" className="border-b border-primary">
+            Log in
           </BlueLink>
         </p>
 
-        <form className="pt-16" onSubmit={formik.handleSubmit}>
+        <form className="pt-12" onSubmit={formik.handleSubmit}>
           <div className="relative">
+            <label htmlFor="username" className="sr-only">
+              Enter your username
+            </label>
+            <FaUser className="absolute text-lg text-primary" />
+            <input
+              id="username"
+              type="text"
+              name="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="Username"
+              className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
+              autoComplete="Username"
+              required
+            />
+            {formik.touched.username && (
+              <p className="text-red-600">{formik.errors.username}</p>
+            )}
+          </div>
+          <div className="relative pt-10">
             <label htmlFor="email" className="sr-only">
               Enter your email
             </label>
-            <FaUser className="absolute text-lg text-primary" />
+            <SiMailDotRu className="absolute text-lg text-primary" />
             <input
               id="email"
               type="email"
               name="email"
-              placeholder="Email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              placeholder="Email"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="email"
               required
@@ -88,10 +110,10 @@ const Login: React.FC<Props> = (props) => {
               id="password"
               type={passwordType}
               name="password"
-              placeholder="Password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              placeholder="Password"
               className="w-full px-8 pb-3 border-b border-gray-300 outline-none focus:border-primary"
               autoComplete="current-password"
               required
@@ -99,6 +121,16 @@ const Login: React.FC<Props> = (props) => {
             {formik.touched.password && (
               <p className="text-red-600">{formik.errors.password}</p>
             )}
+          </div>
+
+          <div className="flex pt-8">
+            <div className="flex items-center pr-3">
+              <input type="checkbox" name="agree" />
+            </div>
+            <p className="text-sm text-gray-400">
+              I agree to the{" "}
+              <BlueLink to="/login">terms and conditions</BlueLink>
+            </p>
           </div>
 
           <div className="flex justify-between pt-10">
@@ -132,21 +164,9 @@ const Login: React.FC<Props> = (props) => {
               }
             </div>
           </div>
-
-          <div className="flex justify-center pt-16 ">
-            <div className="flex items-center pr-2">
-              <input type="checkbox" name="loggedin" className="shadow-inner" />
-            </div>
-            <p className="text-sm text-gray-400">Keep me logged in</p>
-          </div>
-          <div className="pt-5 text-center text-primary">
-            <BlueLink to="/signup" className="font-semibold">
-              Forgot Password?
-            </BlueLink>
-          </div>
         </form>
 
-        <p className="pt-20 text-sm">
+        <p className="pt-16 text-sm">
           © 2020 All Rights Reserved.{" "}
           <BlueLink to="/login" className="font-semibold">
             CORK
@@ -170,6 +190,6 @@ const Login: React.FC<Props> = (props) => {
   );
 };
 
-Login.defaultProps = {};
+Signup.defaultProps = {};
 
-export default memo(Login);
+export default memo(Signup);

@@ -27,3 +27,16 @@ export const login = (data: LoginRequest) => {
 export const logout = () => {
     localStorage.removeItem(LS_AUTH_TOKEN);
 }
+
+interface MeResponse {
+    data : User ;
+}
+
+export const me = () => {
+    const url = BASE_URL + "/me";
+    
+    return axios.get<MeResponse>(url).then(response => {
+        // console.log("me response: ",response.data.data);
+        return response.data.data
+    });
+}
