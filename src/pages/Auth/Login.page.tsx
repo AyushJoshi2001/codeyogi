@@ -11,13 +11,15 @@ import { useFormik } from "formik";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { User } from "../../models/User";
+import { useContext } from "react";
+import AppContext from "../../App.context";
 
-interface Props {
-  onLogin: (user: User) => void;
-}
+interface Props {}
 
 const Login: React.FC<Props> = (props) => {
   // const [data, setData] = useState({ email: "", password: "" });
+
+  const { setUser } = useContext(AppContext);
   const history = useHistory();
 
   const [toggle, setToggle] = useState(false);
@@ -40,7 +42,7 @@ const Login: React.FC<Props> = (props) => {
 
     onSubmit: (data) => {
       login(data).then((u) => {
-        props.onLogin(u);
+        setUser(u);
         // console.log("redirecting to dashboard...");
         history.push("/dashboard");
         // window.location.href = "/dashboard";

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { FC, memo } from "react";
 import { fetchGroups } from "../../api/groups";
+import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
 import Input from "../../components/Input/Input";
 import { Group } from "../../models/Group";
 import { User } from "../../models/User";
 
-interface Props {
-  user: User;
-  className?: string;
-}
+interface Props {}
 
-const Dashboard: FC<Props> = ({ className, user }) => {
+const Dashboard: FC<Props> = (props) => {
+  const { user } = useContext(AppContext);
+
   const [group, setGroup] = useState<Group[]>([]);
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("");
@@ -28,15 +29,15 @@ const Dashboard: FC<Props> = ({ className, user }) => {
   }, [query]);
 
   return (
-    <div className={"px-5 " + className}>
+    <div className={"px-5 "}>
       <div className="flex pt-5 space-x-5 text-2xl font-medium">
         <img
-          src={user.profile_pic_url}
+          src={user!.profile_pic_url}
           className="object-cover w-12 h-12 rounded-full"
           alt="profile pic"
         />
         <div className="flex items-center">
-          <h1>Welcome! {user.first_name + " " + user.last_name}</h1>
+          <h1>Welcome! {user!.first_name + " " + user!.last_name}</h1>
         </div>
       </div>
       <div className="flex py-12">

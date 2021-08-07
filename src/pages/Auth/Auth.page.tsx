@@ -5,16 +5,14 @@ import { User } from "../../models/User";
 import LoginPage from "./Login.page";
 import SignupPage from "./Signup.page";
 
-interface Props {
-  onLogin: (user: User) => void;
-}
+interface Props {}
 
 const Auth: FC<Props> = (props) => {
   return (
     <div className="flex justify-between">
       <Switch>
         <Route path="/login">
-          <LoginPage onLogin={props.onLogin} />
+          <LoginPage />
         </Route>
         <Route path="/signup">
           <SignupPage />

@@ -2,24 +2,21 @@ import { FC, memo } from "react";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Sidebar from "../../components/Sidebar";
-import { User } from "../../models/User";
 import DashboardPage from "./Dashboard.page";
 import LecturePage from "./Lecture.page";
 import RecordingsPage from "./Recordings.page";
 
-interface Props {
-  user: User;
-}
+interface Props {}
 
-const AppContainer: FC<Props> = ({ user }) => {
+const AppContainer: FC<Props> = (props) => {
   return (
     <>
-      <NavBar user={user} />
+      <NavBar />
       <div className="flex">
         <Sidebar />
         <Switch>
           <Route path="/dashboard">
-            <DashboardPage user={user!} />
+            <DashboardPage />
           </Route>
           <Route path="/recordings">
             <RecordingsPage />

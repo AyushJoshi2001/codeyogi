@@ -4,9 +4,9 @@ import hero from "../img/hero.webp";
 interface Props {}
 
 const AuthHero: FC<Props> = (props) => {
-  console.log("AuthHero rendering...");
+  // console.log("AuthHero rendering...");
   useEffect(() => {
-    console.log("AuthHero rendering for the first time.");
+    // console.log("AuthHero rendering for the first time.");
   }, []);
   return (
     <div className="hidden w-1/2 h-screen bg-dark hideAuth:block">

@@ -1,7 +1,9 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { ImSpinner9 } from "react-icons/im";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { me } from "./api/auth";
 import { LS_AUTH_TOKEN } from "./api/base";
+import AppContext from "./App.context";
 import { User } from "./models/User";
 import AppContainerLazy from "./pages/AppContainer/AppContainer.lazy";
 import AuthLazy from "./pages/Auth/Auth.lazy";
@@ -25,49 +27,53 @@ function App() {
     }
 
     me().then((u) => setUser(u));
-  }, [token]);
+  }, []);
 
   if (token && !user) {
-    return <div>loading...</div>;
+    return (
+      <div className="flex items-center justify-center w-screen h-screen">
+        <ImSpinner9 className="text-8xl text-primary animate-spin" />
+      </div>
+    );
   }
 
   return (
-    <Suspense fallback={<div className="text-red-500">Loading...</div>}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            {user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
-          </Route>
+    <AppContext.Provider value={{ user, setUser }}>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center w-screen h-screen">
+            <ImSpinner9 className="text-8xl text-primary animate-spin" />
+          </div>
+        }
+      >
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact>
+              {user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+            </Route>
 
-          <Route path={["/login", "/signup"]} exact>
-            {user ? (
-              <Redirect to="/dashboard" />
-            ) : (
-              <AuthLazy onLogin={setUser} />
-            )}
-          </Route>
+            <Route path={["/login", "/signup"]} exact>
+              {user ? <Redirect to="/dashboard" /> : <AuthLazy />}
+            </Route>
 
-          <Route
-            path={[
-              "/dashboard",
-              "/recordings",
-              "/batch/:batchNumber/lecture/:lectureNumber",
-            ]}
-            exact
-          >
-            {user ? (
-              <AppContainerLazy user={user!} />
-            ) : (
-              <Redirect to="/login" />
-            )}
-          </Route>
+            <Route
+              path={[
+                "/dashboard",
+                "/recordings",
+                "/batch/:batchNumber/lecture/:lectureNumber",
+              ]}
+              exact
+            >
+              {user ? <AppContainerLazy /> : <Redirect to="/login" />}
+            </Route>
 
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </Suspense>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </Suspense>
+    </AppContext.Provider>
   );
 }
 

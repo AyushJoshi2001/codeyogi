@@ -1,14 +1,16 @@
-import { FC, memo } from "react";
+import { FC, memo, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/logo.svg";
 import { User } from "../models/User";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { FiMail } from "react-icons/fi";
+import AppContext from "../App.context";
 
-interface Props {
-  user: User;
-}
+interface Props {}
 
-const NavBar: FC<Props> = ({ user }) => {
+const NavBar: FC<Props> = (props) => {
+  const { user } = useContext(AppContext);
+
   return (
     <div className="flex justify-between px-5 py-2 bg-dark">
       <div className="flex">
@@ -30,9 +32,10 @@ const NavBar: FC<Props> = ({ user }) => {
       </div>
 
       <div className="flex items-center space-x-5">
+        <FiMail className="w-5 h-5 text-white" />
         <IoMdNotificationsOutline className="w-6 h-6 text-white" />
         <img
-          src={user.profile_pic_url}
+          src={user!.profile_pic_url}
           alt="User"
           className="w-8 h-8 rounded"
         />
