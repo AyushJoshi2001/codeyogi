@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import DashboardPage from "./Dashboard.page";
 import LecturePage from "./Lecture.page";
 import RecordingsPage from "./Recordings.page";
+import ProfilePage from "./Profile.page";
 
 interface Props {}
 
@@ -20,6 +21,9 @@ const AppContainer: FC<Props> = (props) => {
           </Route>
           <Route path="/recordings">
             <RecordingsPage />
+          </Route>
+          <Route path="/profile">
+            <ProfilePage />
           </Route>
           <Route path="/batch/:batchNumber/lecture/:lectureNumber">
             <LecturePage />

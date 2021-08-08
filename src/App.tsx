@@ -37,6 +37,8 @@ function App() {
     );
   }
 
+  console.log(user);
+
   return (
     <AppContext.Provider value={{ user, setUser }}>
       <Suspense
@@ -60,6 +62,7 @@ function App() {
               path={[
                 "/dashboard",
                 "/recordings",
+                "/profile",
                 "/batch/:batchNumber/lecture/:lectureNumber",
               ]}
               exact

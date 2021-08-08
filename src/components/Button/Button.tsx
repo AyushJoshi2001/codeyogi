@@ -6,16 +6,12 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<Props> = ({ children, className, ...rest }) => {
   return (
-    <div>
-      <button
-        {...rest}
-        className={
-          "px-5 py-2 text-sm text-white rounded bg-primary " + className
-        }
-      >
-        {children}
-      </button>
-    </div>
+    <button
+      {...rest}
+      className={"px-5 py-2 text-sm text-white rounded bg-primary " + className}
+    >
+      {children}
+    </button>
   );
 };
 

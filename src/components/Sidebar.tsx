@@ -6,7 +6,7 @@ interface Props {}
 
 const Sidebar: FC<Props> = (props) => {
   return (
-    <div className="min-h-screen bg-gray-400 w-72 ">
+    <div className="hidden min-h-screen bg-gray-400 lg:block w-72 ">
       <Button
         type="button"
         className="my-10"

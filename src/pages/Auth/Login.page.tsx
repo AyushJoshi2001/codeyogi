@@ -10,7 +10,6 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
-import { User } from "../../models/User";
 import { useContext } from "react";
 import AppContext from "../../App.context";
 

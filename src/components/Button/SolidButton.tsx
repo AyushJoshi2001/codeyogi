@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { FC, memo } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  theme?: "primary" | "dark" | "danger";
+  theme?: "primary" | "dark" | "danger" | "success";
   type?: "submit" | "button" | "reset" | undefined;
   children: string;
   className?: string;
@@ -20,6 +20,8 @@ const SolidButton: FC<Props> = ({
     themeClass = "bg-primary";
   } else if (theme === "dark") {
     themeClass = "bg-dark";
+  } else if (theme === "success") {
+    themeClass = "bg-green-500";
   } else {
     themeClass = "bg-danger";
   }

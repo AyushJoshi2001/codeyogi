@@ -6,7 +6,6 @@ import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
 import Input from "../../components/Input/Input";
 import { Group } from "../../models/Group";
-import { User } from "../../models/User";
 
 interface Props {}
 
@@ -30,13 +29,13 @@ const Dashboard: FC<Props> = (props) => {
 
   return (
     <div className={"px-5 "}>
-      <div className="flex pt-5 space-x-5 text-2xl font-medium">
+      <div className="flex pt-5 space-x-5 text-2xl ">
         <img
           src={user!.profile_pic_url}
-          className="object-cover w-12 h-12 rounded-full"
+          className="object-cover w-12 h-12 text-sm rounded-full"
           alt="profile pic"
         />
-        <div className="flex items-center">
+        <div className="flex items-center font-medium">
           <h1>Welcome! {user!.first_name + " " + user!.last_name}</h1>
         </div>
       </div>
