@@ -14,7 +14,7 @@ const AppContainer: FC<Props> = (props) => {
     <>
       <NavBar />
       <div className="flex">
-        <Sidebar />
+        <Sidebar className="flex-shrink-0" />
         <Switch>
           <Route path="/dashboard">
             <DashboardPage />

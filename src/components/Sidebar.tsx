@@ -3,11 +3,18 @@ import { Link } from "react-router-dom";
 import { logout } from "../api/auth";
 import Button from "./Button/Button";
 
-interface Props {}
+interface Props {
+  className?: string;
+}
 
-const Sidebar: FC<Props> = (props) => {
+const Sidebar: FC<Props> = ({ className }) => {
   return (
-    <div className="hidden min-h-screen pt-10 bg-gray-200 border-r-2 border-gray-300 lg:block w-72 ">
+    <div
+      className={
+        "hidden min-h-screen pt-10 bg-gray-200 border-r-2 border-gray-300 lg:block lg:w-72 " +
+        className
+      }
+    >
       <Link
         to="/dashboard"
         className="inline-block w-full p-2 my-3 font-semibold text-center bg-white rounded-lg hover:text-primary hover:bg-blue-100"

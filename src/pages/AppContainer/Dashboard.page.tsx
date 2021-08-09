@@ -29,7 +29,7 @@ const Dashboard: FC<Props> = (props) => {
   }, [query]);
 
   return (
-    <div className={"px-5 "}>
+    <div className="px-5 ">
       <div className="flex pt-5 space-x-5 text-2xl ">
         <img
           src={user!.profile_pic_url}
