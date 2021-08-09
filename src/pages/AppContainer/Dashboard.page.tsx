@@ -6,6 +6,7 @@ import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
 import Input from "../../components/Input/Input";
 import { Group } from "../../models/Group";
+import { BiSearch } from "react-icons/bi";
 
 interface Props {}
 
@@ -42,20 +43,21 @@ const Dashboard: FC<Props> = (props) => {
           </h1>
         </div>
       </div>
-      <div className="flex py-12">
+      <div className="relative flex py-12">
         <Input
           type="text"
           placeholder="Search on Click"
           onChange={(event) => {
             setValue(event.target.value);
           }}
-          className="mr-5 focus:border-primary w-30"
+          className="mr-5 focus:border-primary pl-7 w-30"
         />
+        <BiSearch className="absolute w-6 h-6 text-gray-400" />
         <SolidButton theme="primary" onClick={() => setQuery(value)}>
           Search
         </SolidButton>
       </div>
-      <div className="flex pb-12">
+      <div className="relative flex pb-12">
         <Input
           type="text"
           placeholder="Search on Type"
@@ -63,8 +65,9 @@ const Dashboard: FC<Props> = (props) => {
             setValue(event.target.value);
             setQuery(event.target.value);
           }}
-          className="mr-5 focus:border-primary w-30"
+          className="mr-5 pl-7 focus:border-primary w-30"
         />
+        <BiSearch className="absolute w-6 h-6 text-gray-400" />
       </div>
       {group.map((groupProfile) => {
         return (

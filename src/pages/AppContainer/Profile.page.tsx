@@ -130,6 +130,14 @@ const Profile: FC<Props> = (props) => {
             type="submit"
             theme="primary"
             className="shadow-xl hover:shadow-none"
+            onClick={() => {
+              setData({
+                first_name: "",
+                middle_name: "",
+                last_name: "",
+                education: "",
+              });
+            }}
           >
             Reset All
           </SolidButton>

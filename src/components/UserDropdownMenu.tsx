@@ -77,7 +77,7 @@ const DropdownMenu: FC<Props> = ({ className }) => {
                   <div className="flex items-center">
                     <VscSignOut className="w-4 h-4" />
                   </div>
-                  <p>Sign Out</p>
+                  <p>Log Out</p>
                 </button>
               )}
             </Menu.Item>

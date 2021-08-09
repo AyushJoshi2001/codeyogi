@@ -27,7 +27,7 @@ function App() {
     }
 
     me().then((u) => setUser(u));
-  }, []);
+  }, []); // eslint-disable-line
 
   if (token && !user) {
     return (
