@@ -1,20 +1,20 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { FC, memo } from "react";
+import { ProfileData, updateProfile } from "../../api/profileUpdate";
 import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
 
 interface Props {}
 
 const Profile: FC<Props> = (props) => {
-  const { user } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
 
-  const [data, setData] = useState({
-    Fname: user!.first_name,
-    Mname: user!.middle_name,
-    Lname: user!.last_name,
-    Bio: user!.bio,
-    Education: user!.education,
+  const [data, setData] = useState<ProfileData>({
+    first_name: user!.first_name,
+    middle_name: user!.middle_name,
+    last_name: user!.last_name,
+    education: user!.education,
   });
   const dob = `${user!.birth_year}-${user!.birth_month}-${user!.birth_date}`;
 
@@ -46,8 +46,8 @@ const Profile: FC<Props> = (props) => {
                 </label>
                 <input
                   className="p-2 border border-gray-500 rounded outline-none focus:border-primary focus:shadow-lg"
-                  name="Fname"
-                  value={data.Fname}
+                  name="first_name"
+                  value={data.first_name}
                   onChange={handleChange}
                   type="text"
                   placeholder="First Name"
@@ -59,8 +59,8 @@ const Profile: FC<Props> = (props) => {
                 </label>
                 <input
                   className="p-2 border border-gray-500 rounded outline-none focus:border-primary focus:shadow-lg"
-                  name="Mname"
-                  value={data.Mname}
+                  name="middle_name"
+                  value={data.middle_name}
                   onChange={handleChange}
                   type="text"
                   placeholder="Middle Name"
@@ -72,8 +72,8 @@ const Profile: FC<Props> = (props) => {
                 </label>
                 <input
                   className="p-2 border border-gray-500 rounded outline-none focus:border-primary focus:shadow-lg"
-                  name="Lname"
-                  value={data.Lname}
+                  name="last_name"
+                  value={data.last_name}
                   onChange={handleChange}
                   type="text"
                   placeholder="Last Name"
@@ -96,9 +96,9 @@ const Profile: FC<Props> = (props) => {
                 </label>
                 <input
                   className="w-full p-2 border border-gray-500 rounded outline-none focus:border-primary focus:shadow-lg"
-                  name="Education"
+                  name="education"
                   type="text"
-                  value={data.Education}
+                  value={data.education}
                   onChange={handleChange}
                   placeholder="Education"
                 ></input>
@@ -117,8 +117,8 @@ const Profile: FC<Props> = (props) => {
           <textarea
             className="p-2 border border-gray-500 rounded outline-none focus:border-primary focus:shadow-lg h-52"
             placeholder="Tell something interesting about yourself..."
-            name="Bio"
-            value={data.Bio}
+            name="bio"
+            value={user!.bio}
             onChange={handleChange}
           ></textarea>
         </div>
@@ -137,6 +137,11 @@ const Profile: FC<Props> = (props) => {
             type="submit"
             theme="success"
             className="shadow-xl hover:shadow-none"
+            onClick={() => {
+              updateProfile(data).then((response) => {
+                setUser(response.data.data);
+              });
+            }}
           >
             Save Changes
           </SolidButton>

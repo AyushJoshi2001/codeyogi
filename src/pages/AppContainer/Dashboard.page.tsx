@@ -36,7 +36,10 @@ const Dashboard: FC<Props> = (props) => {
           alt="profile pic"
         />
         <div className="flex items-center font-medium">
-          <h1>Welcome! {user!.first_name + " " + user!.last_name}</h1>
+          <h1>
+            Welcome!{" "}
+            {user!.first_name + " " + user!.middle_name + " " + user!.last_name}
+          </h1>
         </div>
       </div>
       <div className="flex py-12">

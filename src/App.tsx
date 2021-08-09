@@ -37,7 +37,7 @@ function App() {
     );
   }
 
-  console.log(user);
+  console.log("App page rendering : ", user);
 
   return (
     <AppContext.Provider value={{ user, setUser }}>
