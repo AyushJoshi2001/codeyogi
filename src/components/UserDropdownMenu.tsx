@@ -1,18 +1,19 @@
 import { Menu, Transition } from "@headlessui/react";
-import { FC, Fragment, memo, useContext } from "react";
+import { FC, Fragment, memo } from "react";
 import { FaUser } from "react-icons/fa";
 import { RiDashboardLine } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { logout } from "../api/auth";
-import AppContext from "../App.context";
+import { useAppSelector } from "../store";
 
 interface Props {
   className?: string;
 }
 
 const DropdownMenu: FC<Props> = ({ className }) => {
-  const { user } = useContext(AppContext);
+  // const { user } = useContext(AppContext);
+  const user = useAppSelector((state) => state.me);
 
   return (
     <Menu as="div" className={className}>

@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { useContext } from "react";
 import { FC, memo } from "react";
 import { fetchGroups } from "../../api/groups";
-import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
 import Input from "../../components/Input/Input";
-import { Group } from "../../models/Group";
 import { BiSearch } from "react-icons/bi";
+import { ME_GROUPS, useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
 
 interface Props {}
 
 const Dashboard: FC<Props> = (props) => {
-  const { user } = useContext(AppContext);
+  // const { user } = useContext(AppContext);
+  const user = useAppSelector((state) => state.me);
+  const group = useAppSelector((state) => state.groups);
+  const dispatch = useDispatch();
 
-  const [group, setGroup] = useState<Group[]>([]);
+  // const [group, setGroup] = useState<Group[]>([]);
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("");
 
@@ -23,10 +25,11 @@ const Dashboard: FC<Props> = (props) => {
       status: "all-groups",
       query: query,
     }).then((data) => {
-      setGroup(data!);
+      dispatch({ type: ME_GROUPS, payload: data });
+      // setGroup(data!);
       // console.log(query);
     });
-  }, [query]);
+  }, [query]); // eslint-disable-line
 
   return (
     <div className="px-5 ">
@@ -50,7 +53,7 @@ const Dashboard: FC<Props> = (props) => {
           onChange={(event) => {
             setValue(event.target.value);
           }}
-          className="mr-5 focus:border-primary pl-7 w-30"
+          className="mr-5 pl-7 w-30"
         />
         <BiSearch className="absolute w-6 h-6 text-gray-400" />
         <SolidButton theme="primary" onClick={() => setQuery(value)}>
@@ -65,7 +68,7 @@ const Dashboard: FC<Props> = (props) => {
             setValue(event.target.value);
             setQuery(event.target.value);
           }}
-          className="mr-5 pl-7 focus:border-primary w-30"
+          className="mr-5 pl-7 w-30"
         />
         <BiSearch className="absolute w-6 h-6 text-gray-400" />
       </div>

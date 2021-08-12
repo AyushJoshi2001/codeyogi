@@ -1,14 +1,16 @@
-import { useContext } from "react";
 import { useState } from "react";
 import { FC, memo } from "react";
+import { useDispatch } from "react-redux";
 import { ProfileData, updateProfile } from "../../api/profileUpdate";
-import AppContext from "../../App.context";
 import SolidButton from "../../components/Button/SolidButton";
+import { ME_FETCH, useAppSelector } from "../../store";
 
 interface Props {}
 
 const Profile: FC<Props> = (props) => {
-  const { user, setUser } = useContext(AppContext);
+  // const { user, setUser } = useContext(AppContext);
+  const user = useAppSelector((state) => state.me);
+  const dispatch = useDispatch();
 
   const [data, setData] = useState<ProfileData>({
     first_name: user!.first_name,
@@ -88,6 +90,7 @@ const Profile: FC<Props> = (props) => {
                   type="date"
                   name="dob"
                   value={dob}
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex flex-col col-span-3">
@@ -147,7 +150,8 @@ const Profile: FC<Props> = (props) => {
             className="shadow-xl hover:shadow-none"
             onClick={() => {
               updateProfile(data).then((response) => {
-                setUser(response.data.data);
+                // console.log(response.data.data);
+                dispatch({ type: ME_FETCH, payload: response.data.data });
               });
             }}
           >

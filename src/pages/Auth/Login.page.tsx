@@ -10,15 +10,16 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
-import { useContext } from "react";
-import AppContext from "../../App.context";
+import { useDispatch } from "react-redux";
+import { ME_LOGIN } from "../../store";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
   // const [data, setData] = useState({ email: "", password: "" });
 
-  const { setUser } = useContext(AppContext);
+  // const { setUser } = useContext(AppContext);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [toggle, setToggle] = useState(false);
@@ -41,7 +42,7 @@ const Login: React.FC<Props> = (props) => {
 
     onSubmit: (data) => {
       login(data).then((u) => {
-        setUser(u);
+        dispatch({ type: ME_LOGIN, payload: u });
         // console.log("redirecting to dashboard...");
         history.push("/dashboard");
         // window.location.href = "/dashboard";
