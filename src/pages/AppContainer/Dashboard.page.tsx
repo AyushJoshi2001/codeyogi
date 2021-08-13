@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FC, memo } from "react";
 import { fetchGroups } from "../../api/groups";
-import SolidButton from "../../components/Button/SolidButton";
 import Input from "../../components/Input/Input";
 import { BiSearch } from "react-icons/bi";
-import { ME_GROUPS, useAppSelector } from "../../store";
+import {
+  GROUPS_QUERY,
+  GROUPS_QUERY_COMPLETED,
+  useAppSelector,
+} from "../../store";
 import { useDispatch } from "react-redux";
 
 interface Props {}
@@ -12,22 +15,26 @@ interface Props {}
 const Dashboard: FC<Props> = (props) => {
   // const { user } = useContext(AppContext);
   const user = useAppSelector((state) => state.me);
-  const group = useAppSelector((state) => state.groups);
+  const query = useAppSelector((state) => state.groupQuery);
   const dispatch = useDispatch();
 
+  const groups = useAppSelector((state) => {
+    const groupIds = state.groupQueryMap[state.groupQuery] || [];
+    const groups = groupIds.map((id) => state.groups[id]);
+    return groups;
+  });
+
   // const [group, setGroup] = useState<Group[]>([]);
-  const [value, setValue] = useState("");
-  const [query, setQuery] = useState("");
+  // const [value, setValue] = useState("");
+  // const [query, setQuery] = useState("");
 
   useEffect(() => {
     // console.log("dashboard page");
-    fetchGroups({
-      status: "all-groups",
-      query: query,
-    }).then((data) => {
-      dispatch({ type: ME_GROUPS, payload: data });
-      // setGroup(data!);
-      // console.log(query);
+    fetchGroups({ status: "all-groups", query: query }).then((groups) => {
+      dispatch({
+        type: GROUPS_QUERY_COMPLETED,
+        payload: { groups: groups, query: query },
+      });
     });
   }, [query]); // eslint-disable-line
 
@@ -46,7 +53,7 @@ const Dashboard: FC<Props> = (props) => {
           </h1>
         </div>
       </div>
-      <div className="relative flex py-12">
+      {/* <div className="relative flex py-12">
         <Input
           type="text"
           placeholder="Search on Click"
@@ -59,27 +66,27 @@ const Dashboard: FC<Props> = (props) => {
         <SolidButton theme="primary" onClick={() => setQuery(value)}>
           Search
         </SolidButton>
-      </div>
-      <div className="relative flex pb-12">
+      </div> */}
+      <div className="relative flex py-12">
         <Input
           type="text"
-          placeholder="Search on Type"
+          placeholder="Search..."
+          value={query}
           onChange={(event) => {
-            setValue(event.target.value);
-            setQuery(event.target.value);
+            dispatch({ type: GROUPS_QUERY, payload: event.target.value });
           }}
-          className="mr-5 pl-7 w-30"
+          className="mr-5 pl-7 w-30 "
         />
         <BiSearch className="absolute w-6 h-6 text-gray-400" />
       </div>
-      {group.map((groupProfile) => {
+      {groups.map((groupProfile) => {
         return (
           <div
             key={groupProfile.id}
             className="flex w-full p-2 my-4 border border-black rounded-lg cursor-pointer bg-blue-50 hover:bg-black hover:text-white "
           >
             <img
-              src={groupProfile.group_image_url}
+              src={groupProfile.group_image_url || "/logo192.png"}
               className="w-12 h-12 mr-2 text-xs rounded-full "
               alt="Group Profile "
               onError={(e: any) => {
