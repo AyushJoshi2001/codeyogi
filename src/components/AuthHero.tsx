@@ -9,11 +9,11 @@ const AuthHero: FC<Props> = (props) => {
     // console.log("AuthHero rendering for the first time.");
   }, []);
   return (
-    <div className="hidden w-1/2 h-screen bg-dark hideAuth:block">
+    <div className="hidden w-1/2 min-h-screen bg-dark hideAuth:block">
       <img
         src={hero}
         alt="heroimage"
-        className="object-cover w-4/5 mx-auto my-16"
+        className="object-cover w-4/5 mx-auto my-12"
       />
     </div>
   );
