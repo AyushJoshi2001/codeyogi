@@ -4,9 +4,9 @@ import { fetchGroups } from "../../api/groups";
 import Input from "../../components/Input/Input";
 import { BiSearch } from "react-icons/bi";
 import { useAppSelector } from "../../store";
-import { useDispatch } from "react-redux";
 import {
   groupQueryCompletedAction,
+  groupsActions,
   groupsQueryAction,
 } from "../../actions/groups.actions";
 
@@ -16,7 +16,6 @@ const Dashboard: FC<Props> = (props) => {
   // const { user } = useContext(AppContext);
   const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
   const query = useAppSelector((state) => state.groups.query);
-  const dispatch = useDispatch();
 
   const groups = useAppSelector((state) => {
     const groupIds = state.groups.queryMap[state.groups.query] || [];
@@ -31,7 +30,7 @@ const Dashboard: FC<Props> = (props) => {
   useEffect(() => {
     // console.log("dashboard page");
     fetchGroups({ status: "all-groups", query: query }).then((groups) => {
-      dispatch(groupQueryCompletedAction(groups || [], query));
+      groupsActions.queryComplete(groups || [], query);
     });
   }, [query]); // eslint-disable-line
 
@@ -70,7 +69,7 @@ const Dashboard: FC<Props> = (props) => {
           placeholder="Search..."
           value={query}
           onChange={(event) => {
-            dispatch(groupsQueryAction(event.target.value));
+            groupsActions.query(event.target.value);
           }}
           className="mr-5 pl-7 w-30 "
         />

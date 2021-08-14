@@ -1,8 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { ImSpinner9 } from "react-icons/im";
-import { useDispatch } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { meFetchAction } from "./actions/auth.actions";
+import { authActions } from "./actions/auth.actions";
 import { me } from "./api/auth";
 import { LS_AUTH_TOKEN } from "./api/base";
 import AppContainerLazy from "./pages/AppContainer/AppContainer.lazy";
@@ -21,14 +20,13 @@ function App() {
     (state) => state.auth.id && state.users.byId[state.auth.id]
   );
   const token = localStorage.getItem(LS_AUTH_TOKEN);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!token) {
       return;
     }
 
-    me().then((u) => dispatch(meFetchAction(u)));
+    me().then((u) => authActions.fetch(u));
   }, []); // eslint-disable-line
 
   if (token && !user) {
