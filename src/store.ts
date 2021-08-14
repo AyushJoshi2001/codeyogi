@@ -1,60 +1,49 @@
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { AnyAction, createStore, Reducer } from "redux";
-import { Group } from "./models/Group";
-import { User } from "./models/User";
+import { combineReducers, createStore } from "redux";
+import { authReducer } from "./reducers/auth.reducer";
+import { groupReducer } from "./reducers/groups.reducer";
+import { userReducer } from "./reducers/users.reducer";
 
-export const ME_FETCH = "me/fetch";
-export const ME_LOGIN = "me/login";
-export const GROUPS_QUERY = "groups/query";
-export const GROUPS_QUERY_COMPLETED = "groups/query_completed";
 export const UI_SIDEBAR_TOGGLE = "ui/sidebar_toggle";
 
-export interface AppState {
-    me?: User;
-    isSidebarOpen: boolean;
-    groupQuery: string;
-    groupQueryMap: { [query: string]: number[] };
-    groups: { [id: number]: Group };
-}
+// export interface AppState {
+//     auth: AuthState;
+//     users: UserState;
+//     groups: GroupState;
+// };
 
-const initialState: AppState = {
-    me: undefined,
-    isSidebarOpen: true,
-    groupQuery: "",
-    groupQueryMap: {},
-    groups: {},
-}
+const reducer = combineReducers({
+    auth: authReducer,
+    users: userReducer,
+    groups: groupReducer
+});
 
-const reducer: Reducer<AppState> = (state = initialState, action: AnyAction) => {
-    switch(action.type) {
-        case ME_FETCH:
-        case ME_LOGIN:
-            return {...state, me: action.payload};
-        
-        case GROUPS_QUERY:
-            return {...state, groupQuery: action.payload};
+// const reducer: Reducer<AppState> = (state = initialState, action: AnyAction) => {
+    
+//     const newState = {
+//         auth: authReducer(state.auth, action),
+//         users: userReducer(state.users, action),
+//         groups: groupReducer(state.groups, action)
+//     };
 
-        case GROUPS_QUERY_COMPLETED:
-            const groups = action.payload.groups as Group[];
-            const groupIds = groups.map((g) => g.id);
+//     if(
+//         newState.auth === state.auth &&
+//         newState.users === state.users &&
+//         newState.groups === state.groups
+//     ) {
+//         return state;
+//     }
 
-            const groupMap = groups.reduce((prev, group) => {
-                return {...prev, [group.id]: group}; 
-            }, {});
-            
-            return {...state, groupQueryMap: {...state.groupQueryMap, [action.payload.query]: groupIds}, groups: { ...state.groups, ...groupMap }};
-        
-        default:
-            return state;
-    }
-}
+//     return newState;
+// };
+
+
 
 export const store = createStore(
     reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-
-export const meFetchAction = (u: User) => ({ type: ME_FETCH, payload: u });
+type AppState = ReturnType<typeof reducer>;
 
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;

@@ -2,14 +2,13 @@ import { Suspense, useEffect } from "react";
 import { ImSpinner9 } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { meFetchAction } from "./actions/auth.actions";
 import { me } from "./api/auth";
 import { LS_AUTH_TOKEN } from "./api/base";
 import AppContainerLazy from "./pages/AppContainer/AppContainer.lazy";
 import AuthLazy from "./pages/Auth/Auth.lazy";
-// import AppContainerPage from "./pages/AppContainer.page";
-// import AuthPage from "./pages/Auth.page";
 import NotFoundPage from "./pages/NotFound.page";
-import { meFetchAction, useAppSelector } from "./store";
+import { useAppSelector } from "./store";
 
 // const AuthPageLazy = lazy(() => import("./pages/Auth/Auth.page"));
 // const AppContainerPageLazy = lazy(
@@ -18,7 +17,9 @@ import { meFetchAction, useAppSelector } from "./store";
 
 function App() {
   // const [user, setUser] = useState<User>();
-  const user = useAppSelector((state) => state.me);
+  const user = useAppSelector(
+    (state) => state.auth.id && state.users.byId[state.auth.id]
+  );
   const token = localStorage.getItem(LS_AUTH_TOKEN);
   const dispatch = useDispatch();
 

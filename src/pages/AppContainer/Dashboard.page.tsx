@@ -3,24 +3,24 @@ import { FC, memo } from "react";
 import { fetchGroups } from "../../api/groups";
 import Input from "../../components/Input/Input";
 import { BiSearch } from "react-icons/bi";
-import {
-  GROUPS_QUERY,
-  GROUPS_QUERY_COMPLETED,
-  useAppSelector,
-} from "../../store";
+import { useAppSelector } from "../../store";
 import { useDispatch } from "react-redux";
+import {
+  groupQueryCompletedAction,
+  groupsQueryAction,
+} from "../../actions/groups.actions";
 
 interface Props {}
 
 const Dashboard: FC<Props> = (props) => {
   // const { user } = useContext(AppContext);
-  const user = useAppSelector((state) => state.me);
-  const query = useAppSelector((state) => state.groupQuery);
+  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
+  const query = useAppSelector((state) => state.groups.query);
   const dispatch = useDispatch();
 
   const groups = useAppSelector((state) => {
-    const groupIds = state.groupQueryMap[state.groupQuery] || [];
-    const groups = groupIds.map((id) => state.groups[id]);
+    const groupIds = state.groups.queryMap[state.groups.query] || [];
+    const groups = groupIds.map((id) => state.groups.byId[id]);
     return groups;
   });
 
@@ -31,10 +31,7 @@ const Dashboard: FC<Props> = (props) => {
   useEffect(() => {
     // console.log("dashboard page");
     fetchGroups({ status: "all-groups", query: query }).then((groups) => {
-      dispatch({
-        type: GROUPS_QUERY_COMPLETED,
-        payload: { groups: groups, query: query },
-      });
+      dispatch(groupQueryCompletedAction(groups || [], query));
     });
   }, [query]); // eslint-disable-line
 
@@ -73,7 +70,7 @@ const Dashboard: FC<Props> = (props) => {
           placeholder="Search..."
           value={query}
           onChange={(event) => {
-            dispatch({ type: GROUPS_QUERY, payload: event.target.value });
+            dispatch(groupsQueryAction(event.target.value));
           }}
           className="mr-5 pl-7 w-30 "
         />

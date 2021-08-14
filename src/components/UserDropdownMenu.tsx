@@ -13,7 +13,7 @@ interface Props {
 
 const DropdownMenu: FC<Props> = ({ className }) => {
   // const { user } = useContext(AppContext);
-  const user = useAppSelector((state) => state.me);
+  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
 
   return (
     <Menu as="div" className={className}>

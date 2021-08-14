@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { FC, memo } from "react";
 import { useDispatch } from "react-redux";
+import { meFetchAction } from "../../actions/auth.actions";
 import { ProfileData, updateProfile } from "../../api/profileUpdate";
 import SolidButton from "../../components/Button/SolidButton";
-import { ME_FETCH, useAppSelector } from "../../store";
+import { useAppSelector } from "../../store";
 
 interface Props {}
 
 const Profile: FC<Props> = (props) => {
   // const { user, setUser } = useContext(AppContext);
-  const user = useAppSelector((state) => state.me);
+  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
   const dispatch = useDispatch();
 
   const [data, setData] = useState<ProfileData>({
@@ -151,7 +152,7 @@ const Profile: FC<Props> = (props) => {
             onClick={() => {
               updateProfile(data).then((response) => {
                 // console.log(response.data.data);
-                dispatch({ type: ME_FETCH, payload: response.data.data });
+                dispatch(meFetchAction(response.data.data));
               });
             }}
           >
