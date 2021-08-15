@@ -5,6 +5,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { logout } from "../api/auth";
+import { meSelector } from "../selectors/auth.selectors";
 import { useAppSelector } from "../store";
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 
 const DropdownMenu: FC<Props> = ({ className }) => {
   // const { user } = useContext(AppContext);
-  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
+  const user = useAppSelector(meSelector);
 
   return (
     <Menu as="div" className={className}>

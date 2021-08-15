@@ -4,13 +4,14 @@ import { useDispatch } from "react-redux";
 import { meFetchAction } from "../../actions/auth.actions";
 import { ProfileData, updateProfile } from "../../api/profileUpdate";
 import SolidButton from "../../components/Button/SolidButton";
+import { meSelector } from "../../selectors/auth.selectors";
 import { useAppSelector } from "../../store";
 
 interface Props {}
 
 const Profile: FC<Props> = (props) => {
   // const { user, setUser } = useContext(AppContext);
-  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
+  const user = useAppSelector(meSelector);
   const dispatch = useDispatch();
 
   const [data, setData] = useState<ProfileData>({

@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
-import { authActions, meLoginAction } from "../../actions/auth.actions";
+import { authActions } from "../../actions/auth.actions";
 
 interface Props {}
 

@@ -7,6 +7,7 @@ import { LS_AUTH_TOKEN } from "./api/base";
 import AppContainerLazy from "./pages/AppContainer/AppContainer.lazy";
 import AuthLazy from "./pages/Auth/Auth.lazy";
 import NotFoundPage from "./pages/NotFound.page";
+import { meSelector } from "./selectors/auth.selectors";
 import { useAppSelector } from "./store";
 
 // const AuthPageLazy = lazy(() => import("./pages/Auth/Auth.page"));
@@ -16,9 +17,7 @@ import { useAppSelector } from "./store";
 
 function App() {
   // const [user, setUser] = useState<User>();
-  const user = useAppSelector(
-    (state) => state.auth.id && state.users.byId[state.auth.id]
-  );
+  const user = useAppSelector(meSelector);
   const token = localStorage.getItem(LS_AUTH_TOKEN);
 
   useEffect(() => {

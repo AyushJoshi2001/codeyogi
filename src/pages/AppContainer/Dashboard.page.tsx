@@ -4,24 +4,20 @@ import { fetchGroups } from "../../api/groups";
 import Input from "../../components/Input/Input";
 import { BiSearch } from "react-icons/bi";
 import { useAppSelector } from "../../store";
+import { groupsActions } from "../../actions/groups.actions";
 import {
-  groupQueryCompletedAction,
-  groupsActions,
-  groupsQueryAction,
-} from "../../actions/groups.actions";
+  currentQueryGroupsSelector,
+  groupQuerySelector,
+} from "../../selectors/groups.selectors";
+import { meSelector } from "../../selectors/auth.selectors";
 
 interface Props {}
 
 const Dashboard: FC<Props> = (props) => {
   // const { user } = useContext(AppContext);
-  const user = useAppSelector((state) => state.users.byId[state.auth.id!]);
-  const query = useAppSelector((state) => state.groups.query);
-
-  const groups = useAppSelector((state) => {
-    const groupIds = state.groups.queryMap[state.groups.query] || [];
-    const groups = groupIds.map((id) => state.groups.byId[id]);
-    return groups;
-  });
+  const user = useAppSelector(meSelector);
+  const query = useAppSelector(groupQuerySelector);
+  const groups = useAppSelector(currentQueryGroupsSelector);
 
   // const [group, setGroup] = useState<Group[]>([]);
   // const [value, setValue] = useState("");
