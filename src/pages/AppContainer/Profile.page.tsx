@@ -55,6 +55,7 @@ const Profile: FC<Props> = (props) => {
                   onChange={handleChange}
                   type="text"
                   placeholder="First Name"
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -81,6 +82,7 @@ const Profile: FC<Props> = (props) => {
                   onChange={handleChange}
                   type="text"
                   placeholder="Last Name"
+                  required={true}
                 />
               </div>
               <div className="flex flex-col">
