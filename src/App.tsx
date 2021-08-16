@@ -63,6 +63,7 @@ function App() {
                 "/recordings",
                 "/profile",
                 "/batch/:batchNumber/lecture/:lectureNumber",
+                "/group/:groupId",
               ]}
               exact
             >

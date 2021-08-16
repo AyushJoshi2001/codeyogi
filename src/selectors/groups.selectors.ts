@@ -1,21 +1,18 @@
 import { createSelector } from "reselect";
-import { AppState } from "../store";
 import { groupStateSelector } from "./app.selector";
 
-export const groupQuerySelector = (state: AppState) => {
-  const groupState = groupStateSelector(state);
-  return groupState.query;
-};
+export const groupQuerySelector = createSelector([
+  groupStateSelector
+], (groupState) => groupState.query);
 
-const groupQueryMapSelector = (state: AppState) => {
-  const groupState = groupStateSelector(state);
-  return groupState.queryMap;
-}
+export const groupQueryMapSelector = createSelector([
+  groupStateSelector
+], (groupState) => groupState.queryMap);
 
-const groupByIdSelector = (state: AppState) => {
-  const groupState = groupStateSelector(state);
-  return groupState.byId;
-}
+export const groupByIdSelector = createSelector([
+  groupStateSelector
+], (groupState) => groupState.byId);
+
 
 // export const currentQueryGroupsSelector = (state: AppState) => {
 //     const query = groupQuerySelector(state);
@@ -30,6 +27,6 @@ export const currentQueryGroupsSelector = createSelector([
   groupQuerySelector, groupQueryMapSelector, groupByIdSelector
 ], (query, queryMap, byId) => {
   const groupIds = queryMap[query] || [];
-  const groups = groupIds.map((id) => byId[id]);
+  const groups = groupIds.map((id: number) => byId[id]);
   return groups;
 });

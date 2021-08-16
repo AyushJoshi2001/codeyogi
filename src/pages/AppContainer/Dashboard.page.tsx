@@ -10,6 +10,7 @@ import {
   groupQuerySelector,
 } from "../../selectors/groups.selectors";
 import { meSelector } from "../../selectors/auth.selectors";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 
@@ -18,6 +19,7 @@ const Dashboard: FC<Props> = (props) => {
   const user = useAppSelector(meSelector);
   const query = useAppSelector(groupQuerySelector);
   const groups = useAppSelector(currentQueryGroupsSelector);
+  const history = useHistory();
 
   // const [group, setGroup] = useState<Group[]>([]);
   // const [value, setValue] = useState("");
@@ -76,6 +78,9 @@ const Dashboard: FC<Props> = (props) => {
           <div
             key={groupProfile.id}
             className="flex w-full p-2 my-4 border border-black rounded-lg cursor-pointer bg-blue-50 hover:bg-black hover:text-white "
+            onClick={() => {
+              history.push(`/group/${groupProfile.id}`);
+            }}
           >
             <img
               src={groupProfile.group_image_url || "/logo192.png"}
