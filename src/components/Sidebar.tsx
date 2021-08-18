@@ -22,7 +22,7 @@ const Sidebar: FC<Props> = ({ className }) => {
         Dashboard
       </Link>
       <Link
-        to="Profile"
+        to="/Profile"
         className="inline-block w-full p-2 my-3 font-semibold text-center bg-white rounded-lg hover:text-primary hover:bg-blue-100"
       >
         Profile
